@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 function parseRecipients(value: string): string[] {
   return value
     .split(",")
@@ -10,7 +8,11 @@ function parseRecipients(value: string): string[] {
     .filter(Boolean);
 }
 
-async function sendOrThrow(payload: Parameters<typeof resend.emails.send>[0], label: string) {
+async function sendOrThrow(
+  resend: Resend,
+  payload: Parameters<Resend["emails"]["send"]>[0],
+  label: string
+) {
   const result = await resend.emails.send(payload);
   if (result.error) {
     throw new Error(`${label} failed: ${result.error.message}`);
@@ -65,16 +67,20 @@ export async function POST(req: Request) {
 
     const adminRecipients = parseRecipients(process.env.ADMIN_EMAIL || "");
     const fromEmail = process.env.FROM_EMAIL;
+    const resendApiKey = process.env.RESEND_API_KEY;
 
-    if (adminRecipients.length === 0 || !fromEmail || !process.env.RESEND_API_KEY) {
+    if (adminRecipients.length === 0 || !fromEmail || !resendApiKey) {
       return NextResponse.json(
         { error: "Server email is not configured (missing env vars)." },
         { status: 500 }
       );
     }
 
+    const resend = new Resend(resendApiKey);
+
     // 1) Email admin (Nicholas)
     await sendOrThrow(
+      resend,
       {
         from: fromEmail,
         to: adminRecipients,
@@ -99,6 +105,7 @@ export async function POST(req: Request) {
 
     // 2) Confirmation email to user
     await sendOrThrow(
+      resend,
       {
         from: fromEmail,
         to: email,
