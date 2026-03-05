@@ -1,11 +1,19 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Gallery from "@/components/Gallery";
+
+type PortfolioImage = { src: string; alt: string };
+
+function errorMessage(error: unknown, fallback: string) {
+  if (error instanceof Error) return error.message;
+  return fallback;
+}
 
 export default function Page() {
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<{ type: "ok" | "err"; msg: string } | null>(null);
+  const [portfolioImages, setPortfolioImages] = useState<PortfolioImage[]>([]);
 
   const [form, setForm] = useState({
     fullName: "",
@@ -22,23 +30,21 @@ export default function Page() {
 
   const sizeLabel = useMemo(() => `${form.size}"`, [form.size]);
 
-  const portfolioImages = useMemo(
-    () => [
-      { src: "/portfolio/p1.jpg", alt: "Tattoo 1" },
-      { src: "/portfolio/p2.jpg", alt: "Tattoo 2" },
-      { src: "/portfolio/p3.jpg", alt: "Tattoo 3" },
-      { src: "/portfolio/p4.jpg", alt: "Tattoo 4" },
-      { src: "/portfolio/p5.jpg", alt: "Tattoo 5" },
-      { src: "/portfolio/p6.jpg", alt: "Tattoo 6" },
-      { src: "/portfolio/p7.jpg", alt: "Tattoo 7" },
-      { src: "/portfolio/p8.jpg", alt: "Tattoo 8" },
-    ],
-    []
-  );
-
   function scrollTo(id: string) {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+
+  useEffect(() => {
+    fetch("/api/portfolio", { cache: "no-store" })
+      .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) throw new Error(data?.error || "Failed to load portfolio.");
+        setPortfolioImages(data.images || []);
+      })
+      .catch(() => {
+        setPortfolioImages([]);
+      });
+  }, []);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -73,8 +79,8 @@ export default function Page() {
         description: "",
         additionalInfo: "",
       });
-    } catch (err: any) {
-      setStatus({ type: "err", msg: err?.message || "Something went wrong." });
+    } catch (error: unknown) {
+      setStatus({ type: "err", msg: errorMessage(error, "Something went wrong.") });
     } finally {
       setSubmitting(false);
     }
@@ -228,8 +234,8 @@ export default function Page() {
                   className="w-full accent-white"
                 />
                 <div className="mt-2 flex justify-between text-xs text-white/60">
-                  <span>1"</span>
-                  <span>24"</span>
+                  <span>1&quot;</span>
+                  <span>24&quot;</span>
                 </div>
               </Field>
 
@@ -308,7 +314,11 @@ export default function Page() {
         </div>
 
         <div className="mt-6">
-          <Gallery images={portfolioImages} />
+          {portfolioImages.length > 0 ? (
+            <Gallery images={portfolioImages} />
+          ) : (
+            <p className="text-sm text-white/60">Portfolio images are being updated. Please check back soon.</p>
+          )}
         </div>
       </section>
 

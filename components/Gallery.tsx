@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 type Img = { src: string; alt: string };
 
@@ -9,9 +9,14 @@ export default function Gallery({ images }: { images: Img[] }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<Img | null>(null);
 
+  const cols = useMemo(() => {
+    // simple “masonry-ish” via columns
+    return "columns-2 md:columns-3 lg:columns-4";
+  }, []);
+
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className={`${cols} gap-3 space-y-3`}>
         {images.map((img) => (
           <button
             key={img.src}
@@ -20,15 +25,18 @@ export default function Gallery({ images }: { images: Img[] }) {
               setActive(img);
               setOpen(true);
             }}
-            className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 hover:border-white/25 transition"
+            className="block w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 hover:border-white/25 transition"
           >
-            <Image
-              src={img.src}
-              alt={img.alt}
-              width={1200}
-              height={1200}
-              className="h-auto w-full object-cover"
-            />
+            <div className="relative w-full">
+              <Image
+                src={img.src}
+                alt={img.alt}
+                width={1200}
+                height={1200}
+                className="h-auto w-full object-cover"
+                priority={false}
+              />
+            </div>
           </button>
         ))}
       </div>
@@ -37,9 +45,11 @@ export default function Gallery({ images }: { images: Img[] }) {
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
           onClick={() => setOpen(false)}
+          role="dialog"
+          aria-modal="true"
         >
           <div
-            className="relative w-full max-w-3xl rounded-3xl border border-white/10 bg-black"
+            className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-black"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
@@ -52,7 +62,7 @@ export default function Gallery({ images }: { images: Img[] }) {
               </button>
             </div>
 
-            <div className="relative aspect-square w-full">
+            <div className="relative aspect-[4/3] w-full">
               <Image
                 src={active.src}
                 alt={active.alt}
