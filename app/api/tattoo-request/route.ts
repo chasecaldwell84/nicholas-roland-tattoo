@@ -19,6 +19,10 @@ function errorMessage(error: unknown) {
   return "Server error";
 }
 
+function isResendSandboxRecipientError(message: string) {
+  return message.includes("You can only send testing emails to your own email address");
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -73,32 +77,7 @@ export async function POST(req: Request) {
 
     const resend = new Resend(resendApiKey);
 
-    // 1) Email admin (Nicholas)
-    await sendOrThrow(
-      resend,
-      {
-        from: fromEmail,
-        to: adminRecipients,
-        replyTo: email,
-        subject: `New Tattoo Request — ${fullName}`,
-        text:
-          `New tattoo request received:\n\n` +
-          `Name: ${fullName}\n` +
-          `Email: ${email}\n` +
-          `Phone: ${phone || "(not provided)"}\n` +
-          `Instagram: ${instagram || "(not provided)"}\n\n` +
-          `Placement: ${placement}\n` +
-          `Size (scale): ${size ?? "(not provided)"}\n` +
-          `Style: ${style || "(not provided)"}\n` +
-          `Color: ${color || "(not provided)"}\n\n` +
-          `Description:\n${description}\n\n` +
-          `Additional information:\n${additionalInfo || "(none)"}\n\n` +
-          `Reference photos:\n${photoLines}\n`,
-      },
-      "Admin notification email"
-    );
-
-    // 2) Confirmation email to user
+    // 1) Confirmation email to client
     await sendOrThrow(
       resend,
       {
@@ -114,7 +93,43 @@ export async function POST(req: Request) {
       "Client confirmation email"
     );
 
-    return NextResponse.json({ ok: true });
+    // 2) Email admin (Nicholas)
+    try {
+      await sendOrThrow(
+        resend,
+        {
+          from: fromEmail,
+          to: adminRecipients,
+          replyTo: email,
+          subject: `New Tattoo Request — ${fullName}`,
+          text:
+            `New tattoo request received:\n\n` +
+            `Name: ${fullName}\n` +
+            `Email: ${email}\n` +
+            `Phone: ${phone || "(not provided)"}\n` +
+            `Instagram: ${instagram || "(not provided)"}\n\n` +
+            `Placement: ${placement}\n` +
+            `Size (scale): ${size ?? "(not provided)"}\n` +
+            `Style: ${style || "(not provided)"}\n` +
+            `Color: ${color || "(not provided)"}\n\n` +
+            `Description:\n${description}\n\n` +
+            `Additional information:\n${additionalInfo || "(none)"}\n\n` +
+            `Reference photos:\n${photoLines}\n`,
+        },
+        "Admin notification email"
+      );
+      return NextResponse.json({ ok: true });
+    } catch (adminError: unknown) {
+      const message = errorMessage(adminError);
+      if (isResendSandboxRecipientError(message)) {
+        return NextResponse.json({
+          ok: true,
+          warning:
+            "Client confirmation sent. Admin email is blocked by Resend testing mode until your sending domain is verified.",
+        });
+      }
+      throw adminError;
+    }
   } catch (error: unknown) {
     return NextResponse.json({ error: errorMessage(error) }, { status: 500 });
   }
