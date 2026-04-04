@@ -93,7 +93,7 @@ export default function Page() {
         <div
           className="absolute inset-0 opacity-35"
           style={{
-            backgroundImage: "url('/hero.jpg')",
+            backgroundImage: "url('/hero.jpeg')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -132,6 +132,31 @@ export default function Page() {
               <span className="rounded-full border border-white/15 px-3 py-1">Black & Grey</span>
               <span className="rounded-full border border-white/15 px-3 py-1">Engraving / Wood carving</span>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ABOUT */}
+      <section id="about" className="mx-auto max-w-6xl px-6 py-16 md:py-20">
+        <div className="grid gap-8 md:grid-cols-2 md:items-center">
+          <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/5">
+            <img
+              src="/hero.jpeg"
+              alt="Nicholas M. Roland portrait"
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div>
+            <h2 className="text-2xl font-semibold">About Nicholas</h2>
+            <p className="mt-4 text-white/75">
+              Nicholas focuses on clean, bold tattooing with details that hold up over time. His style blends
+              fine line precision with black and grey depth, and every piece is built around flow, placement,
+              and long-term readability.
+            </p>
+            <p className="mt-4 text-white/70">
+              Bring your concept, references, and placement ideas. The request form handles the first review,
+              then you’ll get next steps if the project is a fit.
+            </p>
           </div>
         </div>
       </section>

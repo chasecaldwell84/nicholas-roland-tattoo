@@ -1,12 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-function parseRecipients(value: string): string[] {
-  return value
-    .split(",")
-    .map((v) => v.trim())
-    .filter(Boolean);
-}
+const ADMIN_RECIPIENT = "Rolandxtattoos@gmail.com";
 
 async function sendOrThrow(
   resend: Resend,
@@ -65,11 +60,11 @@ export async function POST(req: Request) {
         ? referencePhotoUrls.map((u) => `- ${u}`).join("\n")
         : "(Photos will be requested after review)";
 
-    const adminRecipients = parseRecipients(process.env.ADMIN_EMAIL || "");
+    const adminRecipients = [ADMIN_RECIPIENT];
     const fromEmail = process.env.FROM_EMAIL;
     const resendApiKey = process.env.RESEND_API_KEY;
 
-    if (adminRecipients.length === 0 || !fromEmail || !resendApiKey) {
+    if (!fromEmail || !resendApiKey) {
       return NextResponse.json(
         { error: "Server email is not configured (missing env vars)." },
         { status: 500 }

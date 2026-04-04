@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import React, { useMemo, useState } from "react";
 
 type Img = { src: string; alt: string };
@@ -28,13 +27,11 @@ export default function Gallery({ images }: { images: Img[] }) {
             className="block w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 hover:border-white/25 transition"
           >
             <div className="relative w-full">
-              <Image
+              <img
                 src={img.src}
                 alt={img.alt}
-                width={1200}
-                height={1200}
                 className="h-auto w-full object-cover"
-                priority={false}
+                loading="lazy"
               />
             </div>
           </button>
@@ -63,13 +60,10 @@ export default function Gallery({ images }: { images: Img[] }) {
             </div>
 
             <div className="relative aspect-[4/3] w-full">
-              <Image
+              <img
                 src={active.src}
                 alt={active.alt}
-                fill
-                className="object-contain"
-                sizes="(max-width: 1024px) 100vw, 900px"
-                priority
+                className="h-full w-full object-contain"
               />
             </div>
           </div>

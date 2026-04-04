@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import ReferenceUploader from "@/components/ReferenceUploader";
 
 type PortfolioImage = {
@@ -141,11 +140,9 @@ export default function ArtistPage() {
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {images.map((img) => (
               <div key={img.src} className="rounded-2xl border border-white/10 bg-white/5 p-3">
-                <Image
+                <img
                   src={img.src}
                   alt={img.alt}
-                  width={800}
-                  height={800}
                   className="h-48 w-full rounded-xl object-cover"
                 />
                 <p className="mt-2 text-xs text-white/70">{img.alt}</p>
