@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
+import { getKVClient } from "@/lib/kv-store";
 
 export type PortfolioImage = {
   src: string;
@@ -7,6 +8,7 @@ export type PortfolioImage = {
 };
 
 const portfolioFilePath = path.join(process.cwd(), "app", "data", "portfolio.json");
+const portfolioKVKey = "tattoo:portfolio";
 
 function isValidImage(input: unknown): input is PortfolioImage {
   if (!input || typeof input !== "object") return false;
@@ -24,6 +26,13 @@ async function ensureDir() {
 }
 
 export async function readPortfolio(): Promise<PortfolioImage[]> {
+  const kv = await getKVClient();
+  if (kv) {
+    const value = await kv.get<unknown>(portfolioKVKey);
+    if (!Array.isArray(value)) return [];
+    return value.filter(isValidImage);
+  }
+
   try {
     const raw = await fs.readFile(portfolioFilePath, "utf8");
     const parsed: unknown = JSON.parse(raw);
@@ -38,7 +47,20 @@ export async function readPortfolio(): Promise<PortfolioImage[]> {
 }
 
 export async function writePortfolio(images: PortfolioImage[]) {
-  await ensureDir();
+  const kv = await getKVClient();
   const sanitized = images.filter(isValidImage);
+
+  if (kv) {
+    await kv.set(portfolioKVKey, sanitized);
+    return;
+  }
+
+  if (process.env.VERCEL) {
+    throw new Error(
+      "Persistent storage not configured. Add Vercel KV (KV_REST_API_URL and KV_REST_API_TOKEN)."
+    );
+  }
+
+  await ensureDir();
   await fs.writeFile(portfolioFilePath, JSON.stringify(sanitized, null, 2), "utf8");
 }

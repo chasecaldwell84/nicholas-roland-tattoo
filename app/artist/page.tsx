@@ -9,6 +9,13 @@ type PortfolioImage = {
   alt: string;
 };
 
+type ArtistConfig = {
+  uploadthingConfigured: boolean;
+  artistTokenConfigured: boolean;
+  storageConfigured: boolean;
+  storageMode: "kv" | "missing" | "local-file";
+};
+
 function errorMessage(error: unknown, fallback: string) {
   if (error instanceof Error) return error.message;
   return fallback;
@@ -22,6 +29,7 @@ export default function ArtistPage() {
   const [saving, setSaving] = useState(false);
   const [siteContent, setSiteContent] = useState<SiteContent>(defaultSiteContent);
   const [contentJson, setContentJson] = useState<string>(JSON.stringify(defaultSiteContent, null, 2));
+  const [config, setConfig] = useState<ArtistConfig | null>(null);
 
   async function loadImages() {
     const res = await fetch("/api/portfolio", { cache: "no-store" });
@@ -39,8 +47,15 @@ export default function ArtistPage() {
     setContentJson(JSON.stringify(normalized, null, 2));
   }
 
+  async function loadConfig() {
+    const res = await fetch("/api/artist-config", { cache: "no-store" });
+    const data = (await res.json()) as ArtistConfig;
+    if (!res.ok) throw new Error("Failed to load artist configuration.");
+    setConfig(data);
+  }
+
   useEffect(() => {
-    Promise.all([loadImages(), loadSiteContent()]).catch((error: unknown) => {
+    Promise.all([loadImages(), loadSiteContent(), loadConfig()]).catch((error: unknown) => {
       setStatus({ type: "err", msg: errorMessage(error, "Failed to load images.") });
     });
   }, []);
@@ -140,6 +155,11 @@ export default function ArtistPage() {
           className="mt-2 w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 outline-none focus:border-white/30"
           placeholder="Enter ARTIST_ADMIN_TOKEN"
         />
+        {!config?.artistTokenConfigured && (
+          <div className="mt-3 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
+            Missing <code>ARTIST_ADMIN_TOKEN</code> in environment variables. Admin actions will be unauthorized.
+          </div>
+        )}
 
         <label className="mt-4 block text-sm text-white/80">Default Caption (optional)</label>
         <input
@@ -149,9 +169,17 @@ export default function ArtistPage() {
           placeholder="Example: Fine line floral forearm piece"
         />
 
-        <div className="mt-4">
-          <ReferenceUploader onUploaded={saveUploaded} />
-        </div>
+        {!config?.uploadthingConfigured && (
+          <div className="mt-4 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
+            Uploads are disabled: missing <code>UPLOADTHING_TOKEN</code> in Vercel environment variables.
+          </div>
+        )}
+
+        {config?.uploadthingConfigured ? (
+          <div className="mt-4">
+            <ReferenceUploader onUploaded={saveUploaded} />
+          </div>
+        ) : null}
       </section>
 
       <section className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5">
@@ -166,10 +194,15 @@ export default function ArtistPage() {
           spellCheck={false}
         />
         <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+          {!config?.storageConfigured && (
+            <div className="w-full rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
+              Saving is disabled: add <code>KV_REST_API_URL</code> and <code>KV_REST_API_TOKEN</code> in Vercel.
+            </div>
+          )}
           <button
             type="button"
             onClick={saveSiteContent}
-            disabled={saving}
+            disabled={saving || (config ? !config.storageConfigured : false)}
             className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black hover:opacity-90 disabled:opacity-50"
           >
             Save Website Text
@@ -215,7 +248,7 @@ export default function ArtistPage() {
                 <button
                   type="button"
                   onClick={() => removeImage(img.src)}
-                  disabled={saving}
+                  disabled={saving || (config ? !config.storageConfigured : false)}
                   className="mt-3 rounded-lg border border-red-400/30 px-3 py-1.5 text-xs text-red-200 hover:bg-red-500/10 disabled:opacity-50"
                 >
                   Remove
