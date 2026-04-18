@@ -1,0 +1,106 @@
+{
+  "hero": {
+    "locationLabel": "NORTH DALLAS TATTOO ARTIST",
+    "artistName": "Nicholas M. Roland",
+    "instagramHandle": "@nicholasmroland",
+    "intro": "Clean, bold work with details that age well. Browse the portfolio and submit a request to book.",
+    "primaryCta": "Request a Tattoo",
+    "secondaryCta": "View Portfolio",
+    "tags": [
+      "Fine line",
+      "Black & Grey",
+      "Engraving / Wood carving"
+    ]
+  },
+  "about": {
+    "heading": "About Nicholas",
+    "bodyOne": "Nicholas focuses on clean, bold tattooing with details that hold up over time. His style blends fine line precision with black and grey depth, and every piece is built around flow, placement, and long-term readability.",
+    "bodyTwo": "Bring your concept, references, and placement ideas. The request form handles the first review, then you'll get next steps if the project is a fit.",
+    "imageAlt": "Nicholas M. Roland portrait"
+  },
+  "booking": {
+    "heading": "Tattoo Request",
+    "intro": "Fill this out and you'll get an email confirmation that your request is under review.",
+    "responseLabel": "Response time:",
+    "responseTime": "24-72 hours",
+    "fitNote": "If it's a fit, you'll receive next steps for scheduling and deposit."
+  },
+  "form": {
+    "fullNameLabel": "Full name",
+    "fullNamePlaceholder": "Your name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@email.com",
+    "phoneLabel": "Phone (optional)",
+    "phonePlaceholder": "(xxx) xxx-xxxx",
+    "instagramLabel": "Instagram (optional)",
+    "instagramPlaceholder": "@yourhandle",
+    "placementLabel": "Placement",
+    "placementHint": "Examples: \"outer forearm\", \"left ribs\", \"upper back\", \"behind ear\" (open-ended)",
+    "placementPlaceholder": "Where on your body?",
+    "sizeLabel": "Size (scale)",
+    "sizeHint": "Slide up to 24\" max.",
+    "sizeMinLabel": "1\"",
+    "sizeMaxLabel": "24\"",
+    "styleLabel": "Style",
+    "styleOptions": [
+      "Fine line",
+      "Blackwork",
+      "Traditional",
+      "Neo-traditional",
+      "Realism",
+      "Japanese",
+      "Engraving / Wood carving",
+      "Other"
+    ],
+    "colorLabel": "Color",
+    "colorOptions": [
+      "Black & Grey",
+      "Color",
+      "Either"
+    ],
+    "ideaLabel": "Describe your idea",
+    "ideaPlaceholder": "Subject, vibe, details, inspiration, etc.",
+    "additionalInfoLabel": "Additional information",
+    "additionalInfoHint": "Optional. Anything else you want me to know.",
+    "additionalInfoPlaceholder": "Cover-up info, timing, context, etc.",
+    "referencesLabel": "Reference photos",
+    "referencesHint": "Upload photos that match your idea, placement, or style direction.",
+    "referencesNoneText": "No reference photos attached yet.",
+    "referencesAttachedSingular": "reference photo attached.",
+    "referencesAttachedPlural": "reference photos attached.",
+    "submitText": "Submit Request",
+    "submittingText": "Submitting...",
+    "confirmationText": "You'll receive a confirmation email that your request is under review.",
+    "validationName": "Please enter your name.",
+    "validationEmail": "Please enter your email.",
+    "validationPlacement": "Please tell us placement.",
+    "validationDescription": "Please describe what you want.",
+    "successMessage": "Submitted! You'll receive an email confirmation shortly.",
+    "errorFallback": "Something went wrong."
+  },
+  "portfolio": {
+    "heading": "Portfolio",
+    "subtitle": "A few recent pieces. Tap to enlarge.",
+    "handle": "@nicholasmroland",
+    "emptyMessage": "Portfolio images are being updated. Please check back soon."
+  },
+  "whatToExpect": {
+    "heading": "What to Expect",
+    "depositsTitle": "Deposits",
+    "depositsBody": "Deposits secure your appointment and go toward the final price. Deposits are non-refundable.",
+    "rulesTitle": "Rules",
+    "rulesBody": "Be on time. Stay hydrated. Don't show up sunburned. If you're sick, reschedule.",
+    "aftercareTitle": "Aftercare",
+    "aftercareBody": "You'll get detailed aftercare instructions after your session-follow them to heal clean."
+  },
+  "guidelines": {
+    "heading": "Studio Guidelines",
+    "items": [
+      "18+ only (valid ID required).",
+      "Deposits required to book.",
+      "Respect the artist's time (late arrivals may be cancelled).",
+      "You'll receive prep + aftercare instructions before/after your appointment."
+    ],
+    "footerTemplate": "© {year} Nicholas M. Roland."
+  }
+}

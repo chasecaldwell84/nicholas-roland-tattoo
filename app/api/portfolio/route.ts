@@ -1,19 +1,10 @@
 import { NextResponse } from "next/server";
+import { isAuthorizedRequest } from "@/lib/admin-auth";
 import { readPortfolio, writePortfolio, type PortfolioImage } from "@/lib/portfolio-store";
 
 function errorMessage(error: unknown, fallback: string) {
   if (error instanceof Error) return error.message;
   return fallback;
-}
-
-function isAuthorized(req: Request) {
-  const token = process.env.ARTIST_ADMIN_TOKEN;
-  if (!token) return false;
-
-  const authHeader = req.headers.get("authorization");
-  const bearer = authHeader?.startsWith("Bearer ") ? authHeader.slice("Bearer ".length).trim() : "";
-  const headerToken = req.headers.get("x-admin-token")?.trim() || "";
-  return bearer === token || headerToken === token;
 }
 
 function validateImage(input: unknown): PortfolioImage | null {
@@ -37,7 +28,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  if (!isAuthorized(req)) {
+  if (!isAuthorizedRequest(req)) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 
@@ -73,7 +64,7 @@ export async function POST(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  if (!isAuthorized(req)) {
+  if (!isAuthorizedRequest(req)) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import ReferenceUploader from "@/components/ReferenceUploader";
+import { defaultSiteContent, normalizeSiteContent, type SiteContent } from "@/lib/site-content";
 
 type PortfolioImage = {
   src: string;
@@ -19,6 +20,8 @@ export default function ArtistPage() {
   const [images, setImages] = useState<PortfolioImage[]>([]);
   const [status, setStatus] = useState<{ type: "ok" | "err"; msg: string } | null>(null);
   const [saving, setSaving] = useState(false);
+  const [siteContent, setSiteContent] = useState<SiteContent>(defaultSiteContent);
+  const [contentJson, setContentJson] = useState<string>(JSON.stringify(defaultSiteContent, null, 2));
 
   async function loadImages() {
     const res = await fetch("/api/portfolio", { cache: "no-store" });
@@ -27,8 +30,17 @@ export default function ArtistPage() {
     setImages(data.images || []);
   }
 
+  async function loadSiteContent() {
+    const res = await fetch("/api/site-content", { cache: "no-store" });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data?.error || "Failed to load site content.");
+    const normalized = normalizeSiteContent(data.content);
+    setSiteContent(normalized);
+    setContentJson(JSON.stringify(normalized, null, 2));
+  }
+
   useEffect(() => {
-    loadImages().catch((error: unknown) => {
+    Promise.all([loadImages(), loadSiteContent()]).catch((error: unknown) => {
       setStatus({ type: "err", msg: errorMessage(error, "Failed to load images.") });
     });
   }, []);
@@ -89,6 +101,29 @@ export default function ArtistPage() {
     }
   }
 
+  async function saveSiteContent() {
+    setStatus(null);
+    setSaving(true);
+    try {
+      const parsed = JSON.parse(contentJson) as unknown;
+      const res = await fetch("/api/site-content", {
+        method: "PUT",
+        headers: authHeaders,
+        body: JSON.stringify({ content: parsed }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || "Failed to save website text.");
+      const normalized = normalizeSiteContent(data.content);
+      setSiteContent(normalized);
+      setContentJson(JSON.stringify(normalized, null, 2));
+      setStatus({ type: "ok", msg: "Website text updated." });
+    } catch (error: unknown) {
+      setStatus({ type: "err", msg: errorMessage(error, "Could not save website text.") });
+    } finally {
+      setSaving(false);
+    }
+  }
+
   return (
     <main className="mx-auto min-h-screen max-w-5xl px-6 py-14 text-white">
       <h1 className="text-3xl font-semibold">Artist Portfolio Manager</h1>
@@ -116,6 +151,37 @@ export default function ArtistPage() {
 
         <div className="mt-4">
           <ReferenceUploader onUploaded={saveUploaded} />
+        </div>
+      </section>
+
+      <section className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5">
+        <h2 className="text-xl font-semibold">Website Text Editor</h2>
+        <p className="mt-2 text-xs text-white/60">
+          Edit website copy as JSON. Keep the same keys, change only the values.
+        </p>
+        <textarea
+          value={contentJson}
+          onChange={(e) => setContentJson(e.target.value)}
+          className="mt-4 min-h-[420px] w-full rounded-xl border border-white/10 bg-black/40 p-4 font-mono text-xs outline-none focus:border-white/30"
+          spellCheck={false}
+        />
+        <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+          <button
+            type="button"
+            onClick={saveSiteContent}
+            disabled={saving}
+            className="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black hover:opacity-90 disabled:opacity-50"
+          >
+            Save Website Text
+          </button>
+          <button
+            type="button"
+            onClick={() => setContentJson(JSON.stringify(siteContent, null, 2))}
+            disabled={saving}
+            className="rounded-xl border border-white/15 px-4 py-2 text-sm text-white/85 hover:bg-white/5 disabled:opacity-50"
+          >
+            Reset Unsaved Changes
+          </button>
         </div>
       </section>
 

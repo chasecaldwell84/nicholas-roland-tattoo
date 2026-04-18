@@ -1,0 +1,19 @@
+<svg width="1200" height="700" viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="700" fill="#050505"/>
+  <rect x="80" y="50" width="1040" height="600" rx="28" fill="#0d0d0d" stroke="#1f1f1f"/>
+  <text x="130" y="120" fill="#f2f2f2" font-family="Arial" font-size="38" font-weight="700">Tattoo Request Form</text>
+  <rect x="130" y="150" width="940" height="3" fill="#10B981"/>
+  <rect x="130" y="200" width="455" height="64" rx="14" fill="#111" stroke="#2a2a2a"/>
+  <rect x="615" y="200" width="455" height="64" rx="14" fill="#111" stroke="#10B981"/>
+  <rect x="130" y="292" width="455" height="64" rx="14" fill="#111" stroke="#2a2a2a"/>
+  <rect x="615" y="292" width="455" height="64" rx="14" fill="#111" stroke="#2a2a2a"/>
+  <rect x="130" y="384" width="940" height="120" rx="14" fill="#111" stroke="#2a2a2a"/>
+  <rect x="130" y="535" width="280" height="72" rx="16" fill="#10B981"/>
+  <text x="187" y="581" fill="white" font-family="Arial" font-size="24" font-weight="700">Submit Request</text>
+  <circle cx="1050" cy="571" r="46" fill="#10B981" opacity="0.2"/>
+  <text x="130" y="243" fill="#8a8a8a" font-family="Arial" font-size="20">Full name</text>
+  <text x="615" y="243" fill="#8a8a8a" font-family="Arial" font-size="20">Email</text>
+  <text x="130" y="335" fill="#8a8a8a" font-family="Arial" font-size="20">Phone</text>
+  <text x="615" y="335" fill="#8a8a8a" font-family="Arial" font-size="20">Instagram</text>
+  <text x="130" y="450" fill="#8a8a8a" font-family="Arial" font-size="20">Describe your idea...</text>
+</svg>
