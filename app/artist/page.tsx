@@ -11,6 +11,9 @@ type PortfolioImage = {
 
 type ArtistConfig = {
   uploadthingConfigured: boolean;
+  uploadthingTokenValid?: boolean;
+  uploadthingTokenError?: string;
+  uploadthingTokenLength?: number;
   artistTokenConfigured: boolean;
   storageConfigured: boolean;
   storageMode: "kv" | "missing" | "local-file";
@@ -174,8 +177,17 @@ export default function ArtistPage() {
             Uploads are disabled: missing <code>UPLOADTHING_TOKEN</code> in Vercel environment variables.
           </div>
         )}
+        {config?.uploadthingConfigured && !config.uploadthingTokenValid && (
+          <div className="mt-4 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
+            UploadThing token is present but invalid.
+            {config.uploadthingTokenError ? ` ${config.uploadthingTokenError}` : ""}
+            {typeof config.uploadthingTokenLength === "number"
+              ? ` (Current token length: ${config.uploadthingTokenLength})`
+              : ""}
+          </div>
+        )}
 
-        {config?.uploadthingConfigured ? (
+        {config?.uploadthingConfigured && config.uploadthingTokenValid ? (
           <div className="mt-4">
             <ReferenceUploader onUploaded={saveUploaded} />
           </div>
