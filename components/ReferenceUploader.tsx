@@ -27,7 +27,7 @@ export default function ReferenceUploader({
           allowedContent: "text-xs text-white/60",
         }}
       />
-      <p className="mt-2 text-xs text-white/50">Upload 1-8 reference images (required).</p>
+      <p className="mt-2 text-xs text-white/50">Upload 1-8 reference images (optional).</p>
     </div>
   );
 }

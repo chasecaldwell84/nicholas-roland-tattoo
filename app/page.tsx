@@ -20,19 +20,26 @@ export default function Page() {
   const [content, setContent] = useState<SiteContent>(defaultSiteContent);
 
   const [form, setForm] = useState({
+    requestType: "appointment" as "appointment" | "consultation",
     fullName: "",
     email: "",
     phone: "",
     instagram: "",
     placement: "",
     size: 8,
-    style: "Fine line",
+    style: "Fine Line - Delicate & Clean",
     color: "Black & Grey",
     description: "",
     additionalInfo: "",
   });
 
   const sizeLabel = useMemo(() => `${form.size}"`, [form.size]);
+  const primaryCtaText =
+    content.hero.primaryCta === "Request a Tattoo" ? "Book an Appointment" : content.hero.primaryCta;
+  const bookingHeadingText =
+    content.booking.heading === "Tattoo Request" ? "Book an Appointment" : content.booking.heading;
+  const submitButtonText =
+    content.form.submitText === "Submit Request" ? "Book an Appointment" : content.form.submitText;
 
   function scrollTo(id: string) {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -68,7 +75,9 @@ export default function Page() {
 
     if (!form.fullName.trim()) return setStatus({ type: "err", msg: content.form.validationName });
     if (!form.email.trim()) return setStatus({ type: "err", msg: content.form.validationEmail });
-    if (!form.placement.trim()) return setStatus({ type: "err", msg: content.form.validationPlacement });
+    if (form.requestType === "appointment" && !form.placement.trim()) {
+      return setStatus({ type: "err", msg: content.form.validationPlacement });
+    }
     if (!form.description.trim()) return setStatus({ type: "err", msg: content.form.validationDescription });
 
     setSubmitting(true);
@@ -84,6 +93,7 @@ export default function Page() {
 
       setStatus({ type: "ok", msg: content.form.successMessage });
       setForm({
+        requestType: "appointment",
         fullName: "",
         email: "",
         phone: "",
@@ -125,16 +135,12 @@ export default function Page() {
             </h1>
             <p className="mt-3 text-white/70">{content.hero.instagramHandle}</p>
 
-            <p className="mt-6 text-white/80 md:text-lg">
-              {content.hero.intro}
-            </p>
-
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <button
                 onClick={() => scrollTo("booking")}
                 className="rounded-2xl bg-white px-5 py-3 text-black font-semibold shadow hover:opacity-90 transition"
               >
-                {content.hero.primaryCta}
+                {primaryCtaText}
               </button>
               <button
                 onClick={() => scrollTo("portfolio")}
@@ -144,9 +150,17 @@ export default function Page() {
               </button>
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-2 text-xs text-white/60">
-              {content.hero.tags.map((tag) => (
-                <span key={tag} className="rounded-full border border-white/15 px-3 py-1">
+            <div className="mt-10 flex flex-wrap gap-2 text-xs">
+              {content.hero.tags.map((tag, idx) => (
+                <span
+                  key={tag}
+                  className={[
+                    "rounded-full border px-3 py-1 font-semibold tracking-wide",
+                    idx === 0 && "border-cyan-300/40 bg-cyan-400/10 text-cyan-100",
+                    idx === 1 && "border-emerald-300/40 bg-emerald-400/10 text-emerald-100",
+                    idx === 2 && "border-amber-300/40 bg-amber-400/10 text-amber-100",
+                  ].join(" ")}
+                >
                   {tag}
                 </span>
               ))}
@@ -179,15 +193,8 @@ export default function Page() {
       <section id="booking" className="mx-auto max-w-6xl px-6 py-16 md:py-20">
         <div className="grid gap-10 md:grid-cols-2 md:items-start">
           <div>
-            <h2 className="text-2xl font-semibold">{content.booking.heading}</h2>
+            <h2 className="text-2xl font-semibold">{bookingHeadingText}</h2>
             <p className="mt-3 text-white/70">{content.booking.intro}</p>
-
-            <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5">
-              <p className="text-sm text-white/70">
-                {content.booking.responseLabel} <span className="text-white">{content.booking.responseTime}</span>
-              </p>
-              <p className="mt-2 text-sm text-white/70">{content.booking.fitNote}</p>
-            </div>
           </div>
 
           <form onSubmit={onSubmit} className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-7">
@@ -205,6 +212,42 @@ export default function Page() {
             )}
 
             <div className="grid gap-4">
+              <Field label={content.form.requestTypeLabel} required>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <button
+                    type="button"
+                    onClick={() => setForm((p) => ({ ...p, requestType: "appointment" }))}
+                    className={[
+                      "rounded-2xl border px-4 py-3 text-left text-sm transition",
+                      form.requestType === "appointment"
+                        ? "border-white/50 bg-white/10 text-white"
+                        : "border-white/10 bg-black/30 text-white/70 hover:border-white/25",
+                    ].join(" ")}
+                  >
+                    <p className="font-semibold">{content.form.requestTypeAppointmentLabel}</p>
+                    <p className="mt-1 text-xs text-white/60">Ready to book a tattoo session.</p>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setForm((p) => ({ ...p, requestType: "consultation" }))}
+                    className={[
+                      "rounded-2xl border px-4 py-3 text-left text-sm transition",
+                      form.requestType === "consultation"
+                        ? "border-white/50 bg-white/10 text-white"
+                        : "border-white/10 bg-black/30 text-white/70 hover:border-white/25",
+                    ].join(" ")}
+                  >
+                    <p className="font-semibold">{content.form.requestTypeConsultationLabel}</p>
+                    <p className="mt-1 text-xs text-white/60">Start with a planning session for a larger piece.</p>
+                  </button>
+                </div>
+                {form.requestType === "consultation" && (
+                  <p className="mt-2 rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-3 py-2 text-xs text-cyan-100">
+                    {content.form.consultationHelpText}
+                  </p>
+                )}
+              </Field>
+
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field label={content.form.fullNameLabel} required>
                   <input
@@ -248,7 +291,7 @@ export default function Page() {
 
               <Field
                 label={content.form.placementLabel}
-                required
+                required={form.requestType === "appointment"}
                 hint={content.form.placementHint}
               >
                 <input
@@ -320,7 +363,7 @@ export default function Page() {
 
               <Field label={content.form.referencesLabel} hint={content.form.referencesHint}>
                 <ReferenceUploader onUploaded={setReferencePhotoUrls} />
-                <p className="mt-2 text-xs text-white/60">
+                <p className="mt-2 rounded-lg border border-amber-400/35 bg-amber-400/10 px-3 py-2 text-xs font-semibold text-amber-100">
                   {referencePhotoUrls.length > 0
                     ? `${referencePhotoUrls.length} ${
                         referencePhotoUrls.length === 1
@@ -335,10 +378,13 @@ export default function Page() {
                 disabled={submitting}
                 className="mt-2 rounded-2xl bg-white px-5 py-3 text-black font-semibold shadow hover:opacity-90 disabled:opacity-60 transition"
               >
-                {submitting ? content.form.submittingText : content.form.submitText}
+                {submitting ? content.form.submittingText : submitButtonText}
               </button>
 
               <p className="text-xs text-white/50">{content.form.confirmationText}</p>
+              <p className="rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-xs text-white/75">
+                {content.form.disclaimerText}
+              </p>
             </div>
           </form>
         </div>

@@ -22,6 +22,10 @@ export type SiteContent = {
     fitNote: string;
   };
   form: {
+    requestTypeLabel: string;
+    requestTypeAppointmentLabel: string;
+    requestTypeConsultationLabel: string;
+    consultationHelpText: string;
     fullNameLabel: string;
     fullNamePlaceholder: string;
     emailLabel: string;
@@ -54,6 +58,7 @@ export type SiteContent = {
     submitText: string;
     submittingText: string;
     confirmationText: string;
+    disclaimerText: string;
     validationName: string;
     validationEmail: string;
     validationPlacement: string;
@@ -88,10 +93,10 @@ export const defaultSiteContent: SiteContent = {
     locationLabel: "NORTH DALLAS TATTOO ARTIST",
     artistName: "Nicholas M. Roland",
     instagramHandle: "@nicholasmroland",
-    intro: "Clean, bold work with details that age well. Browse the portfolio and submit a request to book.",
-    primaryCta: "Request a Tattoo",
+    intro: "",
+    primaryCta: "Book an Appointment",
     secondaryCta: "View Portfolio",
-    tags: ["Fine line", "Black & Grey", "Engraving / Wood carving"],
+    tags: ["Fine line craft", "Bold blackwork", "Woodcut energy"],
   },
   about: {
     heading: "About Nicholas",
@@ -102,13 +107,17 @@ export const defaultSiteContent: SiteContent = {
     imageAlt: "Nicholas M. Roland portrait",
   },
   booking: {
-    heading: "Tattoo Request",
+    heading: "Book an Appointment",
     intro: "Fill this out and you'll get an email confirmation that your request is under review.",
-    responseLabel: "Response time:",
-    responseTime: "24-72 hours",
-    fitNote: "If it's a fit, you'll receive next steps for scheduling and deposit.",
+    responseLabel: "",
+    responseTime: "",
+    fitNote: "",
   },
   form: {
+    requestTypeLabel: "What are you booking?",
+    requestTypeAppointmentLabel: "Tattoo appointment",
+    requestTypeConsultationLabel: "Consultation for a large project",
+    consultationHelpText: "Not ready to book a full session? Choose consultation and we'll plan your big project first.",
     fullNameLabel: "Full name",
     fullNamePlaceholder: "Your name",
     emailLabel: "Email",
@@ -126,14 +135,14 @@ export const defaultSiteContent: SiteContent = {
     sizeMaxLabel: '24"',
     styleLabel: "Style",
     styleOptions: [
-      "Fine line",
-      "Blackwork",
-      "Traditional",
-      "Neo-traditional",
-      "Realism",
-      "Japanese",
-      "Engraving / Wood carving",
-      "Other",
+      "Fine Line - Delicate & Clean",
+      "Blackwork - Bold & Graphic",
+      "Traditional - Classic Flash Energy",
+      "Neo-Traditional - Rich Detail & Contrast",
+      "Realism - Depth & Texture",
+      "Japanese - Flow & Storytelling",
+      "Engraving / Woodcut - Etched Texture",
+      "Other / Hybrid Vision",
     ],
     colorLabel: "Color",
     colorOptions: ["Black & Grey", "Color", "Either"],
@@ -143,13 +152,15 @@ export const defaultSiteContent: SiteContent = {
     additionalInfoHint: "Optional. Anything else you want me to know.",
     additionalInfoPlaceholder: "Cover-up info, timing, context, etc.",
     referencesLabel: "Reference photos",
-    referencesHint: "Upload photos that match your idea, placement, or style direction.",
+    referencesHint: "OPTIONAL but highly recommended: upload photos for idea, placement, and style direction.",
     referencesNoneText: "No reference photos attached yet.",
     referencesAttachedSingular: "reference photo attached.",
     referencesAttachedPlural: "reference photos attached.",
-    submitText: "Submit Request",
+    submitText: "Book an Appointment",
     submittingText: "Submitting...",
     confirmationText: "You'll receive a confirmation email that your request is under review.",
+    disclaimerText:
+      "Disclaimer: Your design will be available on the day of your appointment. Design changes will be made before we begin tattooing.",
     validationName: "Please enter your name.",
     validationEmail: "Please enter your email.",
     validationPlacement: "Please tell us placement.",
@@ -268,6 +279,17 @@ export function normalizeSiteContent(input: unknown): SiteContent {
       submitText: stringOrDefault(form.submitText, defaultSiteContent.form.submitText),
       submittingText: stringOrDefault(form.submittingText, defaultSiteContent.form.submittingText),
       confirmationText: stringOrDefault(form.confirmationText, defaultSiteContent.form.confirmationText),
+      disclaimerText: stringOrDefault(form.disclaimerText, defaultSiteContent.form.disclaimerText),
+      requestTypeLabel: stringOrDefault(form.requestTypeLabel, defaultSiteContent.form.requestTypeLabel),
+      requestTypeAppointmentLabel: stringOrDefault(
+        form.requestTypeAppointmentLabel,
+        defaultSiteContent.form.requestTypeAppointmentLabel
+      ),
+      requestTypeConsultationLabel: stringOrDefault(
+        form.requestTypeConsultationLabel,
+        defaultSiteContent.form.requestTypeConsultationLabel
+      ),
+      consultationHelpText: stringOrDefault(form.consultationHelpText, defaultSiteContent.form.consultationHelpText),
       validationName: stringOrDefault(form.validationName, defaultSiteContent.form.validationName),
       validationEmail: stringOrDefault(form.validationEmail, defaultSiteContent.form.validationEmail),
       validationPlacement: stringOrDefault(form.validationPlacement, defaultSiteContent.form.validationPlacement),

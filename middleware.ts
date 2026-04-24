@@ -52,13 +52,7 @@ function isAuthorized(request: NextRequest, expected: { user: string; pass: stri
 
 function requiresBasicAuth(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const method = request.method.toUpperCase();
-
-  if (pathname === "/artist" || pathname.startsWith("/artist/")) return true;
-  if (pathname === "/api/artist-config") return true;
-  if (pathname === "/api/site-content" && method !== "GET") return true;
-  if (pathname === "/api/portfolio" && method !== "GET") return true;
-  return false;
+  return pathname === "/artist" || pathname.startsWith("/artist/");
 }
 
 export function middleware(request: NextRequest) {
@@ -82,5 +76,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/artist/:path*", "/api/:path*"],
+  matcher: ["/artist/:path*"],
 };

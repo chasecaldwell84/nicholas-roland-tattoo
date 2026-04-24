@@ -36,6 +36,7 @@ export async function POST(req: Request) {
       size,
       style,
       color,
+      requestType,
       description,
       additionalInfo,
       referencePhotoUrls,
@@ -48,13 +49,14 @@ export async function POST(req: Request) {
       size: number;
       style: string;
       color: string;
+      requestType?: "appointment" | "consultation";
       description: string;
       additionalInfo?: string;
       referencePhotoUrls?: string[];
     };
 
     // Basic required fields
-    if (!fullName || !email || !placement || !description) {
+    if (!fullName || !email || !description || (requestType !== "consultation" && !placement)) {
       return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
     }
 
@@ -87,7 +89,7 @@ export async function POST(req: Request) {
         text:
           `Hey ${fullName},\n\n` +
           `Your tattoo request has been received and is under review.\n` +
-          `If it’s a fit, you’ll receive next steps for scheduling and the deposit.\n\n` +
+          `Thank you for your interest! I will get back to you as soon as I am available with the next steps.\n\n` +
           `Thanks,\nNicholas`,
       },
       "Client confirmation email"
@@ -108,7 +110,8 @@ export async function POST(req: Request) {
             `Email: ${email}\n` +
             `Phone: ${phone || "(not provided)"}\n` +
             `Instagram: ${instagram || "(not provided)"}\n\n` +
-            `Placement: ${placement}\n` +
+            `Request type: ${requestType === "consultation" ? "Consultation" : "Appointment"}\n` +
+            `Placement: ${placement || "(not provided)"}\n` +
             `Size (scale): ${size ?? "(not provided)"}\n` +
             `Style: ${style || "(not provided)"}\n` +
             `Color: ${color || "(not provided)"}\n\n` +
