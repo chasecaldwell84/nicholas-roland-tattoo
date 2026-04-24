@@ -133,7 +133,7 @@ export default function Page() {
             <h1 className="mt-4 text-4xl font-semibold leading-tight md:text-5xl">
               {content.hero.artistName}
             </h1>
-            <div className="mt-4 flex flex-col gap-2">
+            <div className="mt-4 flex flex-row flex-wrap gap-2">
               <a
                 href={content.hero.instagramUrl}
                 target="_blank"
@@ -240,7 +240,7 @@ export default function Page() {
             <p className="mt-3 text-white/70">{content.booking.intro}</p>
           </div>
 
-          <form onSubmit={onSubmit} className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-7">
+          <form onSubmit={onSubmit} className="rounded-3xl border border-white/10 bg-black p-6 md:p-7">
             {status && (
               <div
                 className={[
