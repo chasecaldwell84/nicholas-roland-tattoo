@@ -3,6 +3,9 @@ export type SiteContent = {
     locationLabel: string;
     artistName: string;
     instagramHandle: string;
+    instagramUrl: string;
+    tiktokHandle: string;
+    tiktokUrl: string;
     intro: string;
     primaryCta: string;
     secondaryCta: string;
@@ -92,7 +95,10 @@ export const defaultSiteContent: SiteContent = {
   hero: {
     locationLabel: "NORTH DALLAS TATTOO ARTIST",
     artistName: "Nicholas M. Roland",
-    instagramHandle: "@nicholasmroland",
+    instagramHandle: "@rolandtattoos",
+    instagramUrl: "https://www.instagram.com/rolandtattoos/?hl=en",
+    tiktokHandle: "@rolandtattoos",
+    tiktokUrl: "https://www.tiktok.com/@rolandtattoos",
     intro: "",
     primaryCta: "Book an Appointment",
     secondaryCta: "View Portfolio",
@@ -219,6 +225,9 @@ export function normalizeSiteContent(input: unknown): SiteContent {
       locationLabel: stringOrDefault(hero.locationLabel, defaultSiteContent.hero.locationLabel),
       artistName: stringOrDefault(hero.artistName, defaultSiteContent.hero.artistName),
       instagramHandle: stringOrDefault(hero.instagramHandle, defaultSiteContent.hero.instagramHandle),
+      instagramUrl: stringOrDefault(hero.instagramUrl, defaultSiteContent.hero.instagramUrl),
+      tiktokHandle: stringOrDefault(hero.tiktokHandle, defaultSiteContent.hero.tiktokHandle),
+      tiktokUrl: stringOrDefault(hero.tiktokUrl, defaultSiteContent.hero.tiktokUrl),
       intro: stringOrDefault(hero.intro, defaultSiteContent.hero.intro),
       primaryCta: stringOrDefault(hero.primaryCta, defaultSiteContent.hero.primaryCta),
       secondaryCta: stringOrDefault(hero.secondaryCta, defaultSiteContent.hero.secondaryCta),

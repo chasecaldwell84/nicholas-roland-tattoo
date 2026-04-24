@@ -133,7 +133,50 @@ export default function Page() {
             <h1 className="mt-4 text-4xl font-semibold leading-tight md:text-5xl">
               {content.hero.artistName}
             </h1>
-            <p className="mt-3 text-white/70">{content.hero.instagramHandle}</p>
+            <div className="mt-4 flex flex-col gap-2">
+              <a
+                href={content.hero.instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex w-fit items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-3 py-2 text-sm text-white/85 transition hover:border-white/50 hover:bg-white/10"
+                style={{ textShadow: "0 0 10px rgba(255,255,255,0.35)" }}
+                aria-label="Open Instagram profile"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4 text-white/90 transition group-hover:text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4.25" />
+                  <circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none" />
+                </svg>
+                {content.hero.instagramHandle}
+              </a>
+              <a
+                href={content.hero.tiktokUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex w-fit items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-3 py-2 text-sm text-white/85 transition hover:border-white/50 hover:bg-white/10"
+                style={{ textShadow: "0 0 10px rgba(255,255,255,0.35)" }}
+                aria-label="Open TikTok profile"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4 text-white/90 transition group-hover:text-white"
+                  fill="currentColor"
+                  aria-hidden
+                >
+                  <path d="M14.9 3v.16c0 2.21 1.72 4.05 3.9 4.22v2.37a7.05 7.05 0 0 1-3.9-1.18v6.1a5.66 5.66 0 1 1-5.15-5.64v2.43a3.27 3.27 0 1 0 2.73 3.21V3h2.42z" />
+                </svg>
+                {content.hero.tiktokHandle}
+              </a>
+            </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <button

@@ -2,7 +2,10 @@
   "hero": {
     "locationLabel": "NORTH DALLAS TATTOO ARTIST",
     "artistName": "Nicholas M. Roland",
-    "instagramHandle": "@nicholasmroland",
+    "instagramHandle": "@rolandtattoos",
+    "instagramUrl": "https://www.instagram.com/rolandtattoos/?hl=en",
+    "tiktokHandle": "@rolandtattoos",
+    "tiktokUrl": "https://www.tiktok.com/@rolandtattoos",
     "intro": "",
     "primaryCta": "Book an Appointment",
     "secondaryCta": "View Portfolio",
