@@ -130,7 +130,7 @@ export default function Page() {
         <div className="relative mx-auto max-w-6xl px-6 py-20 md:py-28">
           <div className="max-w-2xl">
             <p className="text-xs tracking-[0.25em] text-white/60">{content.hero.locationLabel}</p>
-            <h1 className="mt-4 text-4xl font-semibold leading-tight md:text-5xl">
+            <h1 className="mt-4 text-4xl leading-tight md:text-5xl [font-family:var(--font-hero-name)]">
               {content.hero.artistName}
             </h1>
             <div className="mt-4 flex flex-row flex-wrap gap-2">

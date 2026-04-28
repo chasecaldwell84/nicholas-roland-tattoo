@@ -94,7 +94,7 @@ export type SiteContent = {
 export const defaultSiteContent: SiteContent = {
   hero: {
     locationLabel: "NORTH DALLAS TATTOO ARTIST",
-    artistName: "𝔑𝔦𝔠𝔥𝔬𝔩𝔞𝔰",
+    artistName: "Nicholas",
     instagramHandle: "@rolandtattoos",
     instagramUrl: "https://www.instagram.com/rolandtattoos/?hl=en",
     tiktokHandle: "@rolandtattoos",
