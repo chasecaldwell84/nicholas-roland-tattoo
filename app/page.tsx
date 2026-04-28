@@ -233,14 +233,14 @@ export default function Page() {
       </section>
 
       {/* BOOKING FORM */}
-      <section id="booking" className="mx-auto max-w-6xl px-6 py-16 md:py-20">
-        <div className="grid gap-10 md:grid-cols-2 md:items-start">
+      <section id="booking" className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 md:py-20">
+        <div className="grid gap-8 md:grid-cols-2 md:items-start">
           <div>
-            <h2 className="text-2xl font-semibold">{bookingHeadingText}</h2>
-            <p className="mt-3 text-white/70">{content.booking.intro}</p>
+            <h2 className="text-[1.8rem] font-semibold sm:text-2xl">{bookingHeadingText}</h2>
+            <p className="mt-3 text-sm text-white/70 sm:text-base">{content.booking.intro}</p>
           </div>
 
-          <form onSubmit={onSubmit} className="rounded-3xl border border-white/10 bg-black p-6 md:p-7">
+          <form onSubmit={onSubmit} className="rounded-3xl border border-white/10 bg-black p-4 sm:p-6 md:p-7">
             {status && (
               <div
                 className={[
@@ -254,14 +254,14 @@ export default function Page() {
               </div>
             )}
 
-            <div className="grid gap-4">
+            <div className="grid gap-3 sm:gap-4">
               <Field label={content.form.requestTypeLabel} required>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <button
                     type="button"
                     onClick={() => setForm((p) => ({ ...p, requestType: "appointment" }))}
                     className={[
-                      "rounded-2xl border px-4 py-3 text-left text-sm transition",
+                      "rounded-2xl border px-4 py-3 text-left text-sm transition sm:text-sm",
                       form.requestType === "appointment"
                         ? "border-white/50 bg-white/10 text-white"
                         : "border-white/10 bg-black/30 text-white/70 hover:border-white/25",
@@ -274,7 +274,7 @@ export default function Page() {
                     type="button"
                     onClick={() => setForm((p) => ({ ...p, requestType: "consultation" }))}
                     className={[
-                      "rounded-2xl border px-4 py-3 text-left text-sm transition",
+                      "rounded-2xl border px-4 py-3 text-left text-sm transition sm:text-sm",
                       form.requestType === "consultation"
                         ? "border-white/50 bg-white/10 text-white"
                         : "border-white/10 bg-black/30 text-white/70 hover:border-white/25",
@@ -296,7 +296,7 @@ export default function Page() {
                   <input
                     value={form.fullName}
                     onChange={(e) => setForm((p) => ({ ...p, fullName: e.target.value }))}
-                    className="w-full rounded-2xl bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
+                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
                     placeholder={content.form.fullNamePlaceholder}
                   />
                 </Field>
@@ -306,7 +306,7 @@ export default function Page() {
                     type="email"
                     value={form.email}
                     onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
-                    className="w-full rounded-2xl bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
+                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
                     placeholder={content.form.emailPlaceholder}
                   />
                 </Field>
@@ -317,7 +317,7 @@ export default function Page() {
                   <input
                     value={form.phone}
                     onChange={(e) => setForm((p) => ({ ...p, phone: e.target.value }))}
-                    className="w-full rounded-2xl bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
+                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
                     placeholder={content.form.phonePlaceholder}
                   />
                 </Field>
@@ -326,7 +326,7 @@ export default function Page() {
                   <input
                     value={form.instagram}
                     onChange={(e) => setForm((p) => ({ ...p, instagram: e.target.value }))}
-                    className="w-full rounded-2xl bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
+                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
                     placeholder={content.form.instagramPlaceholder}
                   />
                 </Field>
@@ -340,7 +340,7 @@ export default function Page() {
                 <input
                   value={form.placement}
                   onChange={(e) => setForm((p) => ({ ...p, placement: e.target.value }))}
-                  className="w-full rounded-2xl bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
+                  className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
                   placeholder={content.form.placementPlaceholder}
                 />
               </Field>
@@ -365,7 +365,7 @@ export default function Page() {
                   <select
                     value={form.style}
                     onChange={(e) => setForm((p) => ({ ...p, style: e.target.value }))}
-                    className="w-full rounded-2xl bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
+                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
                   >
                     {content.form.styleOptions.map((option) => (
                       <option key={option}>{option}</option>
@@ -377,7 +377,7 @@ export default function Page() {
                   <select
                     value={form.color}
                     onChange={(e) => setForm((p) => ({ ...p, color: e.target.value }))}
-                    className="w-full rounded-2xl bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
+                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
                   >
                     {content.form.colorOptions.map((option) => (
                       <option key={option}>{option}</option>
@@ -390,7 +390,7 @@ export default function Page() {
                 <textarea
                   value={form.description}
                   onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
-                  className="min-h-[120px] w-full rounded-2xl bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
+                  className="min-h-[120px] w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
                   placeholder={content.form.ideaPlaceholder}
                 />
               </Field>
@@ -399,7 +399,7 @@ export default function Page() {
                 <textarea
                   value={form.additionalInfo}
                   onChange={(e) => setForm((p) => ({ ...p, additionalInfo: e.target.value }))}
-                  className="min-h-[90px] w-full rounded-2xl bg-black/40 border border-white/10 px-4 py-3 outline-none focus:border-white/30"
+                  className="min-h-[90px] w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
                   placeholder={content.form.additionalInfoPlaceholder}
                 />
               </Field>
