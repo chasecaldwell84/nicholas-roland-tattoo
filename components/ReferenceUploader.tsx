@@ -10,7 +10,7 @@ export default function ReferenceUploader({
   onUploaded: (urls: string[]) => void;
 }) {
   return (
-    <div className="rounded-2xl border border-white/15 bg-black/30 p-4">
+    <div className="rounded-xl border border-white/15 bg-black/30 p-3 sm:rounded-2xl sm:p-4">
       <UploadButton<OurFileRouter, "referencePhotos">
         endpoint="referencePhotos"
         onClientUploadComplete={(res) => {
@@ -22,12 +22,12 @@ export default function ReferenceUploader({
         }}
         appearance={{
           button:
-            "rounded-xl bg-white px-4 py-2 text-black text-sm font-semibold shadow hover:opacity-90",
+            "rounded-lg bg-white px-3 py-2 text-[13px] font-semibold text-black shadow hover:opacity-90 sm:rounded-xl sm:px-4 sm:text-sm",
           container: "flex flex-col gap-2",
-          allowedContent: "text-xs text-white/60",
+          allowedContent: "text-[11px] text-white/60 sm:text-xs",
         }}
       />
-      <p className="mt-2 text-xs text-white/50">Upload 1-8 reference images (optional).</p>
+      <p className="mt-2 text-[11px] text-white/50 sm:text-xs">Upload 1-8 reference images (optional).</p>
     </div>
   );
 }

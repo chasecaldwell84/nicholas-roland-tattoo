@@ -233,18 +233,18 @@ export default function Page() {
       </section>
 
       {/* BOOKING FORM */}
-      <section id="booking" className="mx-auto max-w-5xl px-3 py-10 sm:px-5 sm:py-16 md:py-20">
+      <section id="booking" className="mx-auto max-w-4xl px-3 py-8 sm:max-w-5xl sm:px-5 sm:py-16 md:py-20">
         <div className="grid gap-6 md:grid-cols-2 md:items-start">
           <div>
-            <h2 className="text-[1.55rem] font-semibold sm:text-2xl">{bookingHeadingText}</h2>
-            <p className="mt-3 text-sm text-white/70 sm:text-base">{content.booking.intro}</p>
+            <h2 className="text-[1.4rem] font-semibold sm:text-2xl">{bookingHeadingText}</h2>
+            <p className="mt-2 text-[13px] leading-snug text-white/70 sm:mt-3 sm:text-base">{content.booking.intro}</p>
           </div>
 
-          <form onSubmit={onSubmit} className="rounded-[1.6rem] border border-white/10 bg-black p-3 sm:p-6 md:p-7">
+          <form onSubmit={onSubmit} className="rounded-[1.35rem] border border-white/10 bg-black p-2.5 sm:rounded-[1.6rem] sm:p-6 md:p-7">
             {status && (
               <div
                 className={[
-                  "mb-5 rounded-2xl px-4 py-3 text-sm",
+                  "mb-4 rounded-xl px-3 py-2.5 text-[13px] sm:mb-5 sm:rounded-2xl sm:px-4 sm:py-3 sm:text-sm",
                   status.type === "ok"
                     ? "bg-white text-black"
                     : "bg-red-500/15 text-red-200 border border-red-500/30",
