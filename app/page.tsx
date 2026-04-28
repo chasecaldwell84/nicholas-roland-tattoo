@@ -233,14 +233,14 @@ export default function Page() {
       </section>
 
       {/* BOOKING FORM */}
-      <section id="booking" className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 md:py-20">
-        <div className="grid gap-8 md:grid-cols-2 md:items-start">
+      <section id="booking" className="mx-auto max-w-5xl px-3 py-10 sm:px-5 sm:py-16 md:py-20">
+        <div className="grid gap-6 md:grid-cols-2 md:items-start">
           <div>
-            <h2 className="text-[1.8rem] font-semibold sm:text-2xl">{bookingHeadingText}</h2>
+            <h2 className="text-[1.55rem] font-semibold sm:text-2xl">{bookingHeadingText}</h2>
             <p className="mt-3 text-sm text-white/70 sm:text-base">{content.booking.intro}</p>
           </div>
 
-          <form onSubmit={onSubmit} className="rounded-3xl border border-white/10 bg-black p-4 sm:p-6 md:p-7">
+          <form onSubmit={onSubmit} className="rounded-[1.6rem] border border-white/10 bg-black p-3 sm:p-6 md:p-7">
             {status && (
               <div
                 className={[
@@ -254,49 +254,49 @@ export default function Page() {
               </div>
             )}
 
-            <div className="grid gap-3 sm:gap-4">
+            <div className="grid gap-2.5 sm:gap-4">
               <Field label={content.form.requestTypeLabel} required>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
                   <button
                     type="button"
                     onClick={() => setForm((p) => ({ ...p, requestType: "appointment" }))}
                     className={[
-                      "rounded-2xl border px-4 py-3 text-left text-sm transition sm:text-sm",
+                      "rounded-xl border px-3 py-2.5 text-left text-[13px] transition sm:rounded-2xl sm:px-4 sm:py-3 sm:text-sm",
                       form.requestType === "appointment"
                         ? "border-white/50 bg-white/10 text-white"
                         : "border-white/10 bg-black/30 text-white/70 hover:border-white/25",
                     ].join(" ")}
                   >
-                    <p className="font-semibold">{content.form.requestTypeAppointmentLabel}</p>
-                    <p className="mt-1 text-xs text-white/60">Ready to book a tattoo session.</p>
+                    <p className="font-semibold leading-snug">{content.form.requestTypeAppointmentLabel}</p>
+                    <p className="mt-1 text-[11px] leading-snug text-white/60 sm:text-xs">Ready to book a tattoo session.</p>
                   </button>
                   <button
                     type="button"
                     onClick={() => setForm((p) => ({ ...p, requestType: "consultation" }))}
                     className={[
-                      "rounded-2xl border px-4 py-3 text-left text-sm transition sm:text-sm",
+                      "rounded-xl border px-3 py-2.5 text-left text-[13px] transition sm:rounded-2xl sm:px-4 sm:py-3 sm:text-sm",
                       form.requestType === "consultation"
                         ? "border-white/50 bg-white/10 text-white"
                         : "border-white/10 bg-black/30 text-white/70 hover:border-white/25",
                     ].join(" ")}
                   >
-                    <p className="font-semibold">{content.form.requestTypeConsultationLabel}</p>
-                    <p className="mt-1 text-xs text-white/60">Start with a planning session for a larger piece.</p>
+                    <p className="font-semibold leading-snug">{content.form.requestTypeConsultationLabel}</p>
+                    <p className="mt-1 text-[11px] leading-snug text-white/60 sm:text-xs">Start with a planning session for a larger piece.</p>
                   </button>
                 </div>
                 {form.requestType === "consultation" && (
-                  <p className="mt-2 rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-3 py-2 text-xs text-cyan-100">
+                  <p className="mt-2 rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-3 py-2 text-[11px] leading-snug text-cyan-100 sm:text-xs">
                     {content.form.consultationHelpText}
                   </p>
                 )}
               </Field>
 
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
                 <Field label={content.form.fullNameLabel} required>
                   <input
                     value={form.fullName}
                     onChange={(e) => setForm((p) => ({ ...p, fullName: e.target.value }))}
-                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
+                    className="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 text-base leading-tight outline-none focus:border-white/30 sm:rounded-2xl sm:px-4 sm:py-3"
                     placeholder={content.form.fullNamePlaceholder}
                   />
                 </Field>
@@ -306,18 +306,18 @@ export default function Page() {
                     type="email"
                     value={form.email}
                     onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
-                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
+                    className="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 text-base leading-tight outline-none focus:border-white/30 sm:rounded-2xl sm:px-4 sm:py-3"
                     placeholder={content.form.emailPlaceholder}
                   />
                 </Field>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
                 <Field label={content.form.phoneLabel}>
                   <input
                     value={form.phone}
                     onChange={(e) => setForm((p) => ({ ...p, phone: e.target.value }))}
-                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
+                    className="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 text-base leading-tight outline-none focus:border-white/30 sm:rounded-2xl sm:px-4 sm:py-3"
                     placeholder={content.form.phonePlaceholder}
                   />
                 </Field>
@@ -326,7 +326,7 @@ export default function Page() {
                   <input
                     value={form.instagram}
                     onChange={(e) => setForm((p) => ({ ...p, instagram: e.target.value }))}
-                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
+                    className="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 text-base leading-tight outline-none focus:border-white/30 sm:rounded-2xl sm:px-4 sm:py-3"
                     placeholder={content.form.instagramPlaceholder}
                   />
                 </Field>
@@ -340,7 +340,7 @@ export default function Page() {
                 <input
                   value={form.placement}
                   onChange={(e) => setForm((p) => ({ ...p, placement: e.target.value }))}
-                  className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
+                  className="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 text-base leading-tight outline-none focus:border-white/30 sm:rounded-2xl sm:px-4 sm:py-3"
                   placeholder={content.form.placementPlaceholder}
                 />
               </Field>
@@ -354,18 +354,18 @@ export default function Page() {
                   onChange={(e) => setForm((p) => ({ ...p, size: Number(e.target.value) }))}
                   className="w-full accent-white"
                 />
-                <div className="mt-2 flex justify-between text-xs text-white/60">
+                <div className="mt-2 flex justify-between text-[11px] text-white/60 sm:text-xs">
                   <span>{content.form.sizeMinLabel}</span>
                   <span>{content.form.sizeMaxLabel}</span>
                 </div>
               </Field>
 
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
                 <Field label={content.form.styleLabel} required>
                   <select
                     value={form.style}
                     onChange={(e) => setForm((p) => ({ ...p, style: e.target.value }))}
-                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
+                    className="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 text-base leading-tight outline-none focus:border-white/30 sm:rounded-2xl sm:px-4 sm:py-3"
                   >
                     {content.form.styleOptions.map((option) => (
                       <option key={option}>{option}</option>
@@ -377,7 +377,7 @@ export default function Page() {
                   <select
                     value={form.color}
                     onChange={(e) => setForm((p) => ({ ...p, color: e.target.value }))}
-                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
+                    className="w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 text-base leading-tight outline-none focus:border-white/30 sm:rounded-2xl sm:px-4 sm:py-3"
                   >
                     {content.form.colorOptions.map((option) => (
                       <option key={option}>{option}</option>
@@ -390,7 +390,7 @@ export default function Page() {
                 <textarea
                   value={form.description}
                   onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
-                  className="min-h-[120px] w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
+                  className="min-h-[104px] w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 text-base leading-tight outline-none focus:border-white/30 sm:min-h-[120px] sm:rounded-2xl sm:px-4 sm:py-3"
                   placeholder={content.form.ideaPlaceholder}
                 />
               </Field>
@@ -399,14 +399,14 @@ export default function Page() {
                 <textarea
                   value={form.additionalInfo}
                   onChange={(e) => setForm((p) => ({ ...p, additionalInfo: e.target.value }))}
-                  className="min-h-[90px] w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-base outline-none focus:border-white/30"
+                  className="min-h-[82px] w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 text-base leading-tight outline-none focus:border-white/30 sm:min-h-[90px] sm:rounded-2xl sm:px-4 sm:py-3"
                   placeholder={content.form.additionalInfoPlaceholder}
                 />
               </Field>
 
               <Field label={content.form.referencesLabel} hint={content.form.referencesHint}>
                 <ReferenceUploader onUploaded={setReferencePhotoUrls} />
-                <p className="mt-2 rounded-lg border border-amber-400/35 bg-amber-400/10 px-3 py-2 text-xs font-semibold text-amber-100">
+                <p className="mt-2 rounded-lg border border-amber-400/35 bg-amber-400/10 px-3 py-2 text-[11px] font-semibold leading-snug text-amber-100 sm:text-xs">
                   {referencePhotoUrls.length > 0
                     ? `${referencePhotoUrls.length} ${
                         referencePhotoUrls.length === 1
@@ -419,13 +419,13 @@ export default function Page() {
 
               <button
                 disabled={submitting}
-                className="mt-2 rounded-2xl bg-white px-5 py-3 text-black font-semibold shadow hover:opacity-90 disabled:opacity-60 transition"
+                className="mt-1 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-black shadow transition hover:opacity-90 disabled:opacity-60 sm:mt-2 sm:rounded-2xl sm:px-5 sm:py-3"
               >
                 {submitting ? content.form.submittingText : submitButtonText}
               </button>
 
-              <p className="text-xs text-white/50">{content.form.confirmationText}</p>
-              <p className="rounded-xl border border-white/20 bg-white/5 px-4 py-3 text-xs text-white/75">
+              <p className="text-[11px] leading-snug text-white/50 sm:text-xs">{content.form.confirmationText}</p>
+              <p className="rounded-xl border border-white/20 bg-white/5 px-3 py-2.5 text-[11px] leading-snug text-white/75 sm:px-4 sm:py-3 sm:text-xs">
                 {content.form.disclaimerText}
               </p>
             </div>
@@ -496,13 +496,13 @@ function Field({
 }) {
   return (
     <div>
-      <div className="mb-2 flex items-center gap-2">
-        <label className="text-sm font-medium">
+      <div className="mb-1.5 flex items-center gap-2 sm:mb-2">
+        <label className="text-[13px] font-medium sm:text-sm">
           {label} {required && <span className="text-white/60">*</span>}
         </label>
       </div>
       {children}
-      {hint && <p className="mt-2 text-xs text-white/50">{hint}</p>}
+      {hint && <p className="mt-1.5 text-[11px] leading-snug text-white/50 sm:mt-2 sm:text-xs">{hint}</p>}
     </div>
   );
 }
